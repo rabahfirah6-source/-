@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>بورتفوليو | عبد الرحمن فيراح</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --card: #1a1a26;
+      --accent: #6c63ff;
+      --accent2: #ff6584;
+      --accent3: #43e97b;
+      --text: #f0f0f8;
+      --muted: #7a7a9a;
+      --border: rgba(108,99,255,0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 5%;
+      backdrop-filter: blur(20px);
+      background: rgba(10,10,15,0.7);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Cairo', sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--text); }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 5% 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(108,99,255,0.12) 0%, transparent 70%);
+      top: -100px; right: -200px;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-glow2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,101,132,0.08) 0%, transparent 70%);
+      bottom: 0; left: 0;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(108,99,255,0.12);
+      border: 1px solid rgba(108,99,255,0.3);
+      color: var(--accent);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Cairo', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.15;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      margin-top: 1.2rem;
+      color: var(--muted);
+      font-size: 1.15rem;
+      line-height: 1.8;
+      max-width: 520px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn {
+      padding: 0.85rem 2rem;
+      border-radius: 12px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #8b7cff);
+      color: #fff;
+      border: none;
+      box-shadow: 0 8px 30px rgba(108,99,255,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(108,99,255,0.5); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: rgba(108,99,255,0.06); }
+
+    .stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Cairo', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat-label { color: var(--muted); font-size: 0.85rem; margin-top: 0.2rem; }
+
+    section { padding: 6rem 5%; position: relative; }
+
+    .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .section-tag {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .section-header h2 {
+      font-family: 'Cairo', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900;
+    }
+
+    .skills-bg { background: var(--surface); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.8rem;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle, rgba(108,99,255,0.15), transparent 70%);
+      border-radius: 50%;
+    }
+    .skill-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 50px rgba(108,99,255,0.15);
+    }
+    .skill-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+    .skill-name { font-family: 'Cairo', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .skill-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.2rem; }
+    .skill-bar-bg { background: rgba(255,255,255,0.06); border-radius: 10px; height: 6px; overflow: hidden; }
+    .skill-bar { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .project-card:hover { transform: translateY(-8px); box-shadow: 0 25px 60px rgba(0,0,0,0.4); }
+
+    .project-thumb {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+    .project-thumb-1 { background: linear-gradient(135deg, #1a1a3e, #2d1f4e); }
+    .project-thumb-2 { background: linear-gradient(135deg, #1a2e1f, #1f3a2e); }
+    .project-thumb-3 { background: linear-gradient(135deg, #2e1a1f, #3a1f2a); }
+
+    .project-body { padding: 1.5rem; }
+    .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .tag {
+      background: rgba(108,99,255,0.12);
+      color: var(--accent);
+      padding: 0.25rem 0.7rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      border: 1px solid rgba(108,99,255,0.2);
+    }
+    .project-title { font-family: 'Cairo', sans-serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .project-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+    .contact-bg { background: var(--surface); }
+    .contact-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 3rem;
+    }
+    .input-group { margin-bottom: 1.5rem; }
+    .input-group label { display: block; color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .input-group input,
+    .input-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 1.2rem;
+      color: var(--text);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s;
+      resize: vertical;
+      direction: rtl;
+    }
+    .input-group input:focus,
+    .input-group textarea:focus { border-color: var(--accent); background: rgba(108,99,255,0.05); }
+    .input-group textarea { min-height: 130px; }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+    }
+    footer span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    .scroll-line {
+      position: fixed;
+      top: 0; right: 0;
+      width: 3px;
+      height: 0%;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      z-index: 200;
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .stats { gap: 1.5rem; }
+      .contact-wrapper { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="scroll-line" id="scrollLine"></div>
+
+<nav>
+  <div class="logo">ع . ف</div>
+  <ul class="nav-links">
+    <li><a href="#about">عني</a></li>
+    <li><a href="#skills">المهارات</a></li>
+    <li><a href="#projects">المشاريع</a></li>
+    <li><a href="#contact">التواصل</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="about">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>🎓</span> طالب في تخصص علوم الحاسب
+    </div>
+    <h1>مرحباً، أنا<br/><span>عبد الرحمن فيراح</span></h1>
+    <p class="hero-sub">
+      مطوّر ويب مبتدئ شغوف بالتكنولوجيا والبرمجة. أسعى دائماً لتعلّم مهارات جديدة وبناء مشاريع إبداعية تحلّ مشكلات حقيقية.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">مشاريعي</a>
+      <a href="#contact" class="btn btn-outline">تواصل معي</a>
+    </div>
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">مشاريع منجزة</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5</div>
+        <div class="stat-label">لغات برمجة</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1</div>
+        <div class="stat-label">سنة خبرة</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="skills-bg" id="skills">
+  <div class="section-header reveal">
+    <div class="section-tag">المهارات</div>
+    <h2>ماذا أُتقن؟</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">HTML & CSS</div>
+      <div class="skill-desc">بناء صفحات ويب متجاوبة ومتوافقة مع جميع المتصفحات</div>
+      <div class="skill-bar-bg"><div class="skill-bar" style="width:85%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-name">JavaScript</div>
+      <div class="skill-desc">تفاعلية الصفحات ومعالجة الأحداث وبرمجة الواجهات</div>
+      <div class="skill-bar-bg"><div class="skill-bar" style="width:70%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🐍</div>
+      <div class="skill-name">Python</div>
+      <div class="skill-desc">البرمجة الأساسية وحل المسائل الخوارزمية والمنطقية</div>
+      <div class="skill-bar-bg"><div class="skill-bar" style="width:65%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">SQL</div>
+      <div class="skill-desc">إدارة قواعد البيانات وكتابة استعلامات فعّالة</div>
+      <div class="skill-bar-bg"><div class="skill-bar" style="width:60%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-name">UI/UX Design</div>
+      <div class="skill-desc">تصميم واجهات مستخدم جذابة وسهلة الاستخدام</div>
+      <div class="skill-bar-bg"><div class="skill-bar" style="width:55%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🔧</div>
+      <div class="skill-name">Git & GitHub</div>
+      <div class="skill-desc">إدارة الكود المصدري والتعاون في المشاريع البرمجية</div>
+      <div class="skill-bar-bg"><div class="skill-bar" style="width:75%"></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-header reveal">
+    <div class="section-tag">المشاريع</div>
+    <h2>أعمالي البارزة</h2>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-thumb project-thumb-1">📚</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JS</span>
+        </div>
+        <div class="project-title">متجر الكتب الرقمية</div>
+        <div class="project-desc">موقع لعرض وبيع الكتب الإلكترونية مع واجهة سلسة وبحث متقدم.</div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb project-thumb-2">📊</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+        </div>
+        <div class="project-title">نظام إدارة الطلاب</div>
+        <div class="project-desc">تطبيق لإدارة بيانات الطلاب والدرجات مع تقارير ديناميكية.</div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb project-thumb-3">🌤️</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">API</span>
+        </div>
+        <div class="project-title">تطبيق الطقس</div>
+        <div class="project-desc">تطبيق يعرض حالة الطقس لأي مدينة باستخدام واجهة برمجية مباشرة.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-bg" id="contact">
+  <div class="section-header reveal">
+    <div class="section-tag">التواصل</div>
+    <h2>هل تريد التواصل؟</h2>
+  </div>
+  <div class="contact-wrapper reveal">
+    <div class="input-group">
+      <label>الاسم الكامل</label>
+      <input type="text" placeholder="أدخل اسمك..." />
+    </div>
+    <div class="input-group">
+      <label>البريد الإلكتروني</label>
+      <input type="email" placeholder="example@email.com" />
+    </div>
+    <div class="input-group">
+      <label>الرسالة</label>
+      <textarea placeholder="اكتب رسالتك هنا..."></textarea>
+    </div>
+    <button class="btn btn-primary" style="width:100%" onclick="handleSend()">إرسال الرسالة ✉️</button>
+  </div>
+</section>
+
+<footer>
+  صُنع بـ <span>❤️</span> بواسطة عبد الرحمن فيراح &nbsp;·&nbsp; مشروع تخرّج جامعي
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById('scrollLine').style.height = scrolled + '%';
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  function handleSend() {
+    const btn = event.target;
+    btn.textContent = '✅ تم الإرسال بنجاح!';
+    btn.style.background = 'linear-gradient(135deg, #43e97b, #38f9d7)';
+    setTimeout(() => {
+      btn.textContent = 'إرسال الرسالة ✉️';
+      btn.style.background = '';
+    }, 3000);
+  }
+</script>
+</body>
+</html>
